@@ -52,11 +52,6 @@ Performs a YouTube search to download. [Also see setup/search](https://github.co
 ## Running
 You can also run the bot without Docker and with multiple other ways check [Setup](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md) for more information.
 ### Docker 
-Run the container with your telegram bot key. [Docker image](https://hub.docker.com/r/cccaaannn/telegram_youtube_downloader)
-```shell
-docker run -d --name telegram_youtube_downloader --restart unless-stopped -e TELEGRAM_BOT_KEY=<TELEGRAM_BOT_KEY> cccaaannn/telegram_youtube_downloader:latest
-```
-
 Example with all flags [Setup with Docker](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md#1-docker)
   - Search feature [Setup/search](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md#search-command)
   - Mapped logs
@@ -66,6 +61,7 @@ docker run -d --name telegram_youtube_downloader --restart unless-stopped \
 -e TELEGRAM_BOT_KEY=<TELEGRAM_BOT_KEY> \
 -e YOUTUBE_API_KEY=<YOUTUBE_API_KEY> \
 -v <YOUR_CONFIGS_PATH>/configs:/telegram_youtube_downloader/telegram_youtube_downloader/configs \
+-v <LOCAL_SAVE_PATH>:/telegram_youtube_downloader/downloads \
 -v <YOUR_LOGS_PATH>/logs:/telegram_youtube_downloader/logs \
 cccaaannn/telegram_youtube_downloader:latest
 ```

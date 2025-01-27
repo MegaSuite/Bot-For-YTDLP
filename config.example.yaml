@@ -6,8 +6,8 @@ logger_options:
 
 telegram_bot_options:
   text_timeout_seconds: 30
-  video_timeout_seconds: 300                      # 5 min  
-  audio_timeout_seconds: 300                      # 5 min
+  video_timeout_seconds: 3000                      # 50 min  
+  audio_timeout_seconds: 3000                      # 50 min
 
   base_url: null                                  # See docs/API_SERVER.md for more information (Ex: http://telegram-bot-api:8081/bot)
   default_command: null                           # audio,video,null docs/CONFIGURATIONS.md for more information
@@ -38,7 +38,7 @@ youtube_downloader_options:
   video_options:                                  # video_options are directly passed to youtube_dl on video downloads
     postprocessors: 
       - key: "FFmpegVideoConvertor"
-        preferedformat: "mp4"
+        preferedformat: "mkv"
     format: "bestvideo+bestaudio"                 # format will be overridden by the default format on the formats section
     noplaylist: true
 

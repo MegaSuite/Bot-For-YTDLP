@@ -1,0 +1,12 @@
+services:
+  bot-for-ytdlp:
+    build:
+      context: .
+    restart: always
+    environment:
+      - TELEGRAM_BOT_KEY=
+      - YOUTUBE_API_KEY=
+    volumes:
+      - ./configs:/telegram_youtube_downloader/telegram_youtube_downloader/configs
+      - ./downloads:/telegram_youtube_downloader/downloads
+      - ./logs:/telegram_youtube_downloader/logs

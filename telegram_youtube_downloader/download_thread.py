@@ -86,7 +86,7 @@ class DownloadThread(threading.Thread):
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
                 
-            filename = f"{result.video_title}.mp4"
+            filename = f"{result.video_title}.mkv"
             # 移动文件到指定目录
             shutil.move(result.file_path, os.path.join(save_dir, filename))
             self.media_sender.send_text(self.chat_id, f"✅ File saved to {save_dir}/{filename}")
