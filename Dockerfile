@@ -1,23 +1,32 @@
 FROM ubuntu:24.04
 
-# Install system dependencies
-RUN apt-get update
-RUN apt-get install ffmpeg -y
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y
-RUN apt-get install python3-venv -y
+# Add metadata
+LABEL maintainer="Developer"
+LABEL description="Telegram YouTube Downloader Bot"
 
-# Create a virtual environment and activate it
-RUN python3 -m venv /venv
-ENV PATH="/venv/bin:$PATH"
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/venv/bin:$PATH"
 
-# Install python dependencies
+# Install system dependencies and create virtual environment
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    python3 \
+    python3-pip \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m venv /venv
+
+# Set working directory
 WORKDIR /telegram_youtube_downloader
-COPY ./requirements.txt .
-RUN pip3 install -r requirements.txt
 
-# Copy app
-COPY . /telegram_youtube_downloader
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Run
+# Copy application code
+COPY . .
+
+# Command to run the application
 CMD ["python3", "telegram_youtube_downloader"]
