@@ -16,11 +16,15 @@ telegram_bot_options:
     mode: "DISABLED"                              # See docs/CONFIGURATIONS.md for more information about authorization
     users: []
 
+save_options:
+  location: "local"    # "telegram" or "local"
+  directory: "./downloads"  # Save directory when location is "local"
+  
 youtube_search_options:
   max_results: 5                                  # Limit search results with 5
 
 youtube_downloader_options:
-  max_video_duration_seconds: 1200                # 20 min
+  max_video_duration_seconds: 3000                # 50 min
   max_audio_duration_seconds: 3000                # 50 min
   ffmpeg_location: null                           # null will try to get from env as ffmpeg
 
