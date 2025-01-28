@@ -40,6 +40,11 @@ class YoutubeDlOptions:
             self.__audio_options["ffmpeg_location"] = self.__youtube_dl_options["ffmpeg_location"]
             self.__video_options["ffmpeg_location"] = self.__youtube_dl_options["ffmpeg_location"]
 
+        cookie = self.__get_cookie()
+        if cookie:
+            self.__audio_options["cookiefile"] = cookie
+            self.__video_options["cookiefile"] = cookie
+
     def __get_random_dir_path(self):
         path = os.path.join("temp", str(uuid.uuid4()))
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
@@ -56,3 +61,16 @@ class YoutubeDlOptions:
             return self.__video_options
         if(content_type == ContentType.AUDIO):
             return self.__audio_options
+
+    def __get_cookie(self) -> str | None:
+        """Get cookie from file"""
+        cookie_options = self.__youtube_dl_options.get("cookie_options", {})
+        
+        cookie_file = cookie_options.get("cookie_file")
+        if cookie_file:
+            if not os.path.isabs(cookie_file):
+                cookie_file = os.path.join(os.getcwd(), cookie_file)
+            if os.path.exists(cookie_file):
+                return cookie_file
+            
+        return None
