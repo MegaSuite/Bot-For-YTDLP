@@ -26,7 +26,7 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY ./telegram_youtube_downloader .
+COPY ./telegram_youtube_downloader ./telegram_youtube_downloader
 COPY ./config.example.yaml ./telegram_youtube_downloader/configs/config.yaml
 
 # Command to run the application
