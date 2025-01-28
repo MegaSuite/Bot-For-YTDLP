@@ -80,9 +80,11 @@ class YoutubeDlOptions:
         cookie_options = self.__youtube_dl_options.get("cookie_options", {})
         
         cookie_file = cookie_options.get("cookie_file")
+        self.__logger.info(f"Cookie file: {cookie_file}")
         if cookie_file:
             if not os.path.isabs(cookie_file):
                 cookie_file = os.path.join(os.getcwd(), cookie_file)
+                self.__logger.info(f"Cookie file path: {cookie_file}")
             if os.path.exists(cookie_file):
                 # Log first 3 lines of cookie file
                 try:
