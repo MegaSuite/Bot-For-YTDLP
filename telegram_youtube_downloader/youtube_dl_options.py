@@ -63,41 +63,15 @@ class YoutubeDlOptions:
         if(content_type == ContentType.AUDIO):
             return self.__audio_options
 
-    # def __get_cookie(self) -> str | None:
-    #     """Get cookie from file"""
-    #     cookie_options = self.__youtube_dl_options.get("cookie_options", {})
-        
-    #     cookie_file = cookie_options.get("cookie_file")
-    #     if cookie_file:
-    #         if not os.path.isabs(cookie_file):
-    #             cookie_file = os.path.join(os.getcwd(), cookie_file)
-    #         if os.path.exists(cookie_file):
-    #             return cookie_file
-            
-    #     return None
     def __get_cookie(self) -> str | None:
-        """Get cookie from file and log first few lines"""
+        """Get cookie from file"""
         cookie_options = self.__youtube_dl_options.get("cookie_options", {})
         
         cookie_file = cookie_options.get("cookie_file")
-        self.__logger.info(f"Cookie file: {cookie_file}")
         if cookie_file:
             if not os.path.isabs(cookie_file):
                 cookie_file = os.path.join(os.getcwd(), cookie_file)
-                self.__logger.info(f"Cookie file path: {cookie_file}")
             if os.path.exists(cookie_file):
-                # Log first 3 lines of cookie file
-                try:
-                    with open(cookie_file, 'r') as f:
-                        self.__logger.info("First 3 lines of cookie file:")
-                        for i, line in enumerate(f):
-                            if i < 3:
-                                self.__logger.info(f"Line {i+1}: {line.strip()}")
-                            else:
-                                break
-                except Exception as e:
-                    self.__logger.error(f"Error reading cookie file: {e}")
-                    
                 return cookie_file
-                
+            
         return None

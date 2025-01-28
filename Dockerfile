@@ -19,14 +19,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && python3 -m venv /venv
 
 # Set working directory
-WORKDIR /telegram_youtube_downloader
+WORKDIR /app
 
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY . .
+COPY ./telegram_youtube_downloader .
+COPY ./config.example.yaml ./telegram_youtube_downloader/configs/config.yaml
 
 # Command to run the application
 CMD ["python3", "telegram_youtube_downloader"]

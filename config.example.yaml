@@ -43,7 +43,7 @@ youtube_downloader_options:
     noplaylist: true
 
   cookie_options:                                 
-    cookie_file: "./configs/youtube.txt"          # path to cookiefile, absolute path or relative path are both allowed
+    cookie_file: "telegram_youtube_downloader/configs/youtube.txt"          # path to cookiefile, absolute path or relative path are both allowed
   
   allowed_url_patterns:                           # Array of url regex for allowed paths, names will be used on '/sites' command
     - name: All sites allowed
