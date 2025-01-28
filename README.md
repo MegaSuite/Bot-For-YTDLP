@@ -1,17 +1,23 @@
-# Telegram YouTube downloader
+# ytdlp-tgbot
 ---
-## Telegram bot for downloading video or audio from [multiple](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) sites, you can run it with [single](#running) command.
+![GitHub top language](https://img.shields.io/github/languages/top/MegaSuite/ytdlp-tgbot?color=blue&style=for-the-badge)  [![GitHub](https://img.shields.io/github/license/MegaSuite/ytdlp-tgbot?color=brightgreen&style=for-the-badge)](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/LICENSE) [![Docker Pulls](https://img.shields.io/docker/pulls/megasuite/ytdlp-tgbot?color=blue&style=for-the-badge)](https://hub.docker.com/r/megasuite/ytdlp-tgbot) [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/megasuite/ytdlp-tgbot/latest?color=teal&style=for-the-badge)](https://hub.docker.com/r/megasuite/ytdlp-tgbot)
 
-![GitHub top language](https://img.shields.io/github/languages/top/cccaaannn/telegram_youtube_downloader?color=blue&style=for-the-badge) [![GitHub release](https://img.shields.io/github/v/release/cccaaannn/telegram_youtube_downloader?color=blueviolet&style=for-the-badge)](https://github.com/cccaaannn/telegram_youtube_downloader/releases?style=flat-square) [![GitHub](https://img.shields.io/github/license/cccaaannn/telegram_youtube_downloader?color=brightgreen&style=for-the-badge)](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/LICENSE) [![Docker Pulls](https://img.shields.io/docker/pulls/cccaaannn/telegram_youtube_downloader?color=blue&style=for-the-badge)](https://hub.docker.com/r/cccaaannn/telegram_youtube_downloader) [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/cccaaannn/telegram_youtube_downloader/latest?color=teal&style=for-the-badge)](https://hub.docker.com/r/cccaaannn/telegram_youtube_downloader)
-
+## What's new ?
+- change `save_options` in `configs/configs.yaml` to change between `saving locally` and `send thru telegram`.
+- Use cookie to login
 ## Table of contents
-- [Demo](#demo)
-- [Commands](#commands)
-  - [Download](#1-download)
-  - [Search](#2-search)
-  - [Utilities](#3-utilities)
-- [Running](#running)
-- [Docs](#docs)
+- [ytdlp-tgbot](#ytdlp-tgbot)
+  - [What's new ?](#whats-new-)
+  - [Table of contents](#table-of-contents)
+  - [Demo](#demo)
+  - [Commands](#commands)
+    - [1. Download](#1-download)
+    - [2. Search](#2-search)
+    - [3. Utilities](#3-utilities)
+  - [Running](#running)
+    - [Docker](#docker)
+  - [Docs](#docs)
+    - [Also see](#also-see)
 
 ## Demo
 <img src="https://github.com/cccaaannn/readme_media/blob/master/media/telegram_youtube_downloader/gifs/example_download_audio.gif?raw=true" alt="drawing" width="250"/> <img src="https://github.com/cccaaannn/readme_media/blob/master/media/telegram_youtube_downloader/gifs/example_download_menu.gif?raw=true" alt="drawing" width="253"/>
@@ -31,17 +37,17 @@
 /audio <format> <download url>
 /a <download url>
 ```
-- You can set a [default command](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/CONFIGURATIONS.md#default_command) to run a download command on bare messages.
+- You can set a [default command](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/CONFIGURATIONS.md#default_command) to run a download command on bare messages.
 
 ### 2. Search
-Performs a YouTube search to download. [Also see setup/search](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md#search-command)
+Performs a YouTube search to download. [Also see setup/search](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/SETUP.md#search-command)
 ```shell
 /search <query>
 /s <query>
 ```
 
 ### 3. Utilities
-[See configurations](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/CONFIGURATIONS.md) for command configurations.
+[See configurations](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/CONFIGURATIONS.md) for command configurations.
 ```shell
 /formats
 /sites
@@ -50,10 +56,10 @@ Performs a YouTube search to download. [Also see setup/search](https://github.co
 ```
 
 ## Running
-You can also run the bot without Docker and with multiple other ways check [Setup](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md) for more information.
+You can also run the bot without Docker and with multiple other ways check [Setup](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/SETUP.md) for more information.
 ### Docker 
-Example with all flags [Setup with Docker](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md#1-docker)
-  - Search feature [Setup/search](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md#search-command)
+Example with all flags [Setup with Docker](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/SETUP.md#1-docker)
+  - Search feature [Setup/search](https://github.com/MegaSuite/ytdlp-tgbot/blob/master/docs/SETUP.md#search-command)
   - Mapped logs
   - Custom configurations
 ```shell
@@ -63,18 +69,12 @@ docker run -d --name telegram_youtube_downloader --restart unless-stopped \
 -v <YOUR_CONFIGS_PATH>/configs:/telegram_youtube_downloader/telegram_youtube_downloader/configs \
 -v <LOCAL_SAVE_PATH>:/telegram_youtube_downloader/downloads \
 -v <YOUR_LOGS_PATH>/logs:/telegram_youtube_downloader/logs \
-cccaaannn/telegram_youtube_downloader:latest
-```
-
-## Daily build
-This project depends on [yt-dlp](https://github.com/yt-dlp/yt-dlp) and it is constantly updated, a [daily Docker build](https://hub.docker.com/r/cccaaannn/telegram_youtube_downloader/tags) pipeline added to keep the project up to date with external dependencies. It is not tested so might not be stable but if you are getting download errors on the latest version you can use daily until latest is fixed.
-```shell
-docker run -d --name telegram_youtube_downloader --restart unless-stopped -e TELEGRAM_BOT_KEY=<TELEGRAM_BOT_KEY> cccaaannn/telegram_youtube_downloader:daily
+megasuite/ytdlp-tgbot:latest
 ```
 
 ## Docs
 ### Also see
-- [Setup](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/SETUP.md) for more ways to run the bot.
-- [Configurations](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/CONFIGURATIONS.md) for all configurable options.
-- [Hardware Acceleration](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/HARDWARE_ACCELERATION.md) for using ffmpeg with hardware acceleration.
-- [Api Server](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/docs/API_SERVER.md) for using with custom telegram api server with increased download limits.
+- [Setup](https://github.com/MegaSuite/ytdlp-tgbot/blob/master/docs/SETUP.md) for more ways to run the bot.
+- [Configurations](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/CONFIGURATIONS.md) for all configurable options.
+- [Hardware Acceleration](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/HARDWARE_ACCELERATION.md) for using ffmpeg with hardware acceleration.
+- [Api Server](https://github.com//MegaSuite/ytdlp-tgbot/blob/master/docs/API_SERVER.md) for using with custom telegram api server with increased download limits.
