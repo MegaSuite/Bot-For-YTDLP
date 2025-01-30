@@ -57,9 +57,9 @@ youtube_downloader_options:
         value: "worstvideo+worstaudio/worst"
       - name: 1080p
         value: "137+bestaudio/best"
+        is_default: true
       - name: 720p
         value: "136+bestaudio/best"
-        is_default: true
       - name: 480p
         value: "135+bestaudio/best"
       - name: 360p
