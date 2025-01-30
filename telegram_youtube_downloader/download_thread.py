@@ -24,6 +24,28 @@ class DownloadThread(threading.Thread):
         self.content_type = content_type
         self.dl_format_name = dl_format_name
 
+    def __get_extension_from_config(self, content_type: ContentType) -> str:
+        """Get file extension from config based on content type"""
+        config = ConfigUtils.read_cfg_file()["youtube_downloader_options"]
+        
+        if content_type == ContentType.AUDIO:
+            # Get preferred codec for audio from postprocessors
+            audio_options = config["audio_options"]
+            if "postprocessors" in audio_options:
+                for processor in audio_options["postprocessors"]:
+                    if processor["key"] == "FFmpegExtractAudio":
+                        return processor.get("preferredcodec", "mp3")
+            return "mp3"  # Default fallback
+            
+        elif content_type == ContentType.VIDEO:
+            # Get preferred format for video from postprocessors
+            video_options = config["video_options"] 
+            if "postprocessors" in video_options:
+                for processor in video_options["postprocessors"]:
+                    if processor["key"] == "FFmpegVideoConvertor":
+                        return processor.get("preferedformat", "mkv")
+            return "mkv"  # Default fallback
+        
     def __run_for_audio(self) -> None:
         download_start = time.time()
         result = self.downloader.download(self.url, ContentType.AUDIO, self.dl_format_name)
@@ -47,14 +69,15 @@ class DownloadThread(threading.Thread):
             self.__logger.info(f"Total operation took {float(time.time() - download_start):.3f} seconds")
         
         elif save_options["location"] == "local":
-            # 新增保存到本地的逻辑
+            # Save to local with proper extension
             self.media_sender.send_text(self.chat_id, "⬆️🎧 Download finished, saving...")
             save_dir = save_options["directory"]
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
             
-            filename = f"{result.video_title}.mp3"
-            # 移动文件到指定目录
+            ext = self.__get_extension_from_config(ContentType.AUDIO)
+            filename = f"{result.video_title}.{ext}"
+            # Move file to specified directory
             shutil.move(result.file_path, os.path.join(save_dir, filename))
             self.media_sender.send_text(self.chat_id, f"✅ File saved to {save_dir}/{filename}")
 
@@ -80,14 +103,15 @@ class DownloadThread(threading.Thread):
             self.__logger.info(f"Total operation took {float(time.time() - download_start):.3f} seconds")
             
         elif save_options["location"] == "local":
-            # 新增保存到本地的逻辑
+            # Save to local with proper extension
             self.media_sender.send_text(self.chat_id, "⬆️📽️ Download finished, saving...")
             save_dir = save_options["directory"]
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
                 
-            filename = f"{result.video_title}.mkv"
-            # 移动文件到指定目录
+            ext = self.__get_extension_from_config(ContentType.VIDEO)
+            filename = f"{result.video_title}.{ext}"
+            # Move file to specified directory 
             shutil.move(result.file_path, os.path.join(save_dir, filename))
             self.media_sender.send_text(self.chat_id, f"✅ File saved to {save_dir}/{filename}")
             
