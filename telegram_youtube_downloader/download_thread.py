@@ -86,7 +86,7 @@ class DownloadThread(threading.Thread):
 
     def __run_for_video(self) -> None:
         download_start = time.time()
-        result = self.downloader.download(self.url, ContentType.VIDEO, self.dl_format_name)
+        result = self.downloader.download(self.url, ContentType.VIDEO, self.dl_format_name, self.use_cookie)
         self.__logger.info(f"Download completed {result}, took {float(time.time() - download_start):.3f} seconds")
 
         save_options = ConfigUtils.read_cfg_file()["save_options"]
@@ -127,12 +127,6 @@ class DownloadThread(threading.Thread):
             if(self.content_type == ContentType.AUDIO):
                 self.__run_for_audio()
             elif(self.content_type == ContentType.VIDEO):
-                result = self.downloader.download(
-                    self.url, 
-                    ContentType.VIDEO, 
-                    self.dl_format_name,
-                    use_cookie=self.use_cookie
-                )
                 self.__run_for_video()
             else:
                 pass
