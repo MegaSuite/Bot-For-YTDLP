@@ -14,7 +14,8 @@ from utils.config_utils import ConfigUtils
 
 
 class DownloadThread(threading.Thread):
-    def __init__(self, downloader: YoutubeDownloader, media_sender: TelegramMediaSender, url: str, chat_id: int, content_type: ContentType, dl_format_name: "str | None") -> None:
+    def __init__(self, downloader: YoutubeDownloader, media_sender: TelegramMediaSender, url: str, chat_id: int, content_type: ContentType, 
+                 dl_format_name: "str | None", use_cookie: bool = False) -> None:
         super().__init__()
         self.__logger = LoggerFactory.get_logger(self.__class__.__name__)
         self.downloader = downloader
@@ -23,6 +24,8 @@ class DownloadThread(threading.Thread):
         self.chat_id = chat_id
         self.content_type = content_type
         self.dl_format_name = dl_format_name
+        self.use_cookie = use_cookie
+
 
     def __get_extension_from_config(self, content_type: ContentType) -> str:
         """Get file extension from config based on content type"""
@@ -124,6 +127,12 @@ class DownloadThread(threading.Thread):
             if(self.content_type == ContentType.AUDIO):
                 self.__run_for_audio()
             elif(self.content_type == ContentType.VIDEO):
+                result = self.downloader.download(
+                    self.url, 
+                    ContentType.VIDEO, 
+                    self.dl_format_name,
+                    use_cookie=self.use_cookie
+                )
                 self.__run_for_video()
             else:
                 pass

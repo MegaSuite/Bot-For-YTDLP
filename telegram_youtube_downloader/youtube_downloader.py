@@ -160,14 +160,14 @@ class YoutubeDownloader:
             format_names += f"{video_format['name']}{is_default}\n"
         return format_names
 
-    def download(self, url: str, content_type: ContentType, download_format_name: "str | None") -> DownloaderResult:
+    def download(self, url: str, content_type: ContentType, download_format_name: "str | None", use_cookie: bool = False) -> DownloaderResult:
         """Generic download function, sets download_format to default if download_format_name is None"""
         if(not download_format_name):
             dl_format = self.__get_default_download_format(content_type=content_type)
         else: 
             dl_format = self.__get_download_format_from_name(content_type=content_type, format_name=download_format_name)
 
-        options = YoutubeDlOptions()
+        options = YoutubeDlOptions(use_cookie=use_cookie)
         options.set_format(content_type, dl_format.value)
 
         result = self.__perform_download(url, options.get_for_content_type(content_type))

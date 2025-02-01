@@ -66,7 +66,7 @@ class TelegramBot:
                 /video <download url>
                 /video <format> <download url>
                 /v <download url>
-
+                /vc <download url> (download with cookie)
                 [Audio download] Max: ({self.downloader.get_max_audio_duration()})
                 /audio <download url>
                 /audio <format> <download url>
@@ -216,6 +216,35 @@ class TelegramBot:
                 dt = DownloadThread(downloader=self.downloader, media_sender=self.media_sender, url=url, chat_id=chat_id, content_type=ContentType.VIDEO, dl_format_name=None)
                 dt.start()
 
+        @TelegramBotErrorHandler.command_handler(self.__logger, command_usage="/vc <download url> or /vc <format> <download url>\n/formats for available formats")
+        @TelegramBotCommandInterceptor.secured_command(function_claims={"all", "video"})
+        async def video_with_cookie(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+            if(len(context.args) > 2 or len(context.args) < 1):
+                raise ValueError()
+
+            chat_id = update.message.chat.id
+
+            # Check arguments
+            if(len(context.args) == 2):
+                dl_format_name = context.args[0]
+                url = context.args[1]
+            if(len(context.args) == 1):
+                url = context.args[0]
+                dl_format_name = None
+
+            await update.message.reply_text("⬇️📽️ Download Starting (with cookie)...")
+
+            dt = DownloadThread(
+                downloader=self.downloader, 
+                media_sender=self.media_sender,
+                url=url,
+                chat_id=chat_id,
+                content_type=ContentType.VIDEO,
+                dl_format_name=dl_format_name,
+                use_cookie=True
+            )
+            dt.start()
+
         async def default_message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             context.args = [update.message.text]
             if(self.__default_command == DefaultCommandType.AUDIO.value):
@@ -248,6 +277,7 @@ class TelegramBot:
 
         application.add_handler(CommandHandler("video", video))
         application.add_handler(CommandHandler("v", video))
+        application.add_handler(CommandHandler("vc", video_with_cookie))
 
         # Search menu handler
         application.add_handler(CommandHandler("search", search))

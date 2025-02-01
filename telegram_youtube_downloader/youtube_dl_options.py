@@ -7,7 +7,7 @@ from utils.config_utils import ConfigUtils
 from utils.logger_factory import LoggerFactory
 
 class YoutubeDlOptions:
-    def __init__(self):
+    def __init__(self, use_cookie: bool = False):
         self.__youtube_dl_options = ConfigUtils.read_cfg_file()["youtube_downloader_options"]
         self.__logger = LoggerFactory.get_logger(self.__class__.__name__)
 
@@ -41,10 +41,11 @@ class YoutubeDlOptions:
             self.__audio_options["ffmpeg_location"] = self.__youtube_dl_options["ffmpeg_location"]
             self.__video_options["ffmpeg_location"] = self.__youtube_dl_options["ffmpeg_location"]
 
-        cookie = self.__get_cookie()
-        if cookie:
-            self.__audio_options["cookiefile"] = cookie
-            self.__video_options["cookiefile"] = cookie
+        if use_cookie:
+            cookie = self.__get_cookie()
+            if cookie:
+                self.__audio_options["cookiefile"] = cookie
+                self.__video_options["cookiefile"] = cookie
 
     def __get_random_dir_path(self):
         path = os.path.join("temp", str(uuid.uuid4()))
