@@ -1,8 +1,4 @@
-FROM ubuntu:24.04
-
-# Add metadata
-LABEL maintainer="Developer"
-LABEL description="Telegram YouTube Downloader Bot"
+FROM python:3.12-alpine
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -10,12 +6,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PATH="/venv/bin:$PATH"
 
 # Install system dependencies and create virtual environment
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
     ffmpeg \
-    python3 \
-    python3-pip \
-    python3-venv \
-    && rm -rf /var/lib/apt/lists/* \
+    python3-dev \
+    gcc \
+    musl-dev \
     && python3 -m venv /venv
 
 # Set working directory
@@ -26,8 +21,15 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY ./telegram_youtube_downloader ./telegram_youtube_downloader
-COPY ./config.example.yaml ./telegram_youtube_downloader/configs/config.yaml
+COPY ./ytdlp-tgbot ./ytdlp-tgbot
+
+# Create required directories
+RUN mkdir -p /app/configs /app/downloads /app/logs \
+    && adduser -D appuser \
+    && chown -R appuser:appuser /app
+
+# Switch to non-root user
+USER appuser
 
 # Command to run the application
-CMD ["python3", "telegram_youtube_downloader"]
+CMD ["python3", "-m", "ytdlp-tgbot"]

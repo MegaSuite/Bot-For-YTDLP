@@ -7,6 +7,6 @@ services:
       - TELEGRAM_BOT_KEY=
       - YOUTUBE_API_KEY=
     volumes:
-      - ./configs:/app/telegram_youtube_downloader/configs
+      - ./configs:/app/configs
       - ./downloads:/app/downloads
       - ./logs:/app/logs
