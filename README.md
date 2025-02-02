@@ -1,5 +1,4 @@
 # ytdlp-tgbot
----
 ![GitHub top language](https://img.shields.io/github/languages/top/MegaSuite/ytdlp-tgbot?color=blue&style=for-the-badge)  [![GitHub](https://img.shields.io/github/license/MegaSuite/ytdlp-tgbot?color=brightgreen&style=for-the-badge)](https://github.com/cccaaannn/telegram_youtube_downloader/blob/master/LICENSE) [![Docker Pulls](https://img.shields.io/docker/pulls/megasuite/ytdlp-tgbot?color=blue&style=for-the-badge)](https://hub.docker.com/r/megasuite/ytdlp-tgbot) [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/megasuite/ytdlp-tgbot/latest?color=teal&style=for-the-badge)](https://hub.docker.com/r/megasuite/ytdlp-tgbot)
 
 ## What's new ?
