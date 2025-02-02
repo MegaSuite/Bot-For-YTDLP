@@ -65,9 +65,9 @@ services:
     volumes:
       - <YOUR_BASE_PATH>/telegram_bot_api:/var/lib/telegram-bot-api
 
-  telegram-youtube-downloader:
-    image: cccaaannn/telegram_youtube_downloader:latest
-    container_name: telegram-youtube-downloader
+  ytdlp-tgbot:
+    image: megasuite/ytdlp-tgbot:latest
+    container_name: ytdlp-tgbot
     restart: unless-stopped
     deploy:
       resources:
@@ -79,8 +79,8 @@ services:
       TELEGRAM_BOT_KEY: <TELEGRAM_BOT_KEY>
     #   YOUTUBE_API_KEY: <YOUTUBE_API_KEY>
     volumes:
-      - <YOUR_BASE_PATH>/telegram_youtube_downloader/configs:/telegram_youtube_downloader/telegram_youtube_downloader/configs
-    #   - <YOUR_BASE_PATH>/telegram_youtube_downloader/logs:/telegram_youtube_downloader/logs
+      - <YOUR_BASE_PATH>/configs:/app/configs
+    #   - <YOUR_BASE_PATH>/logs:/app/logs
     depends_on:
       - telegram-bot-api
 
