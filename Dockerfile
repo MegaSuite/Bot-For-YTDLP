@@ -28,8 +28,5 @@ RUN mkdir -p /app/configs /app/downloads /app/logs \
     && adduser -D appuser \
     && chown -R appuser:appuser /app
 
-# Switch to non-root user
-USER appuser
-
 # Command to run the application
-CMD ["python3", "-m", "ytdlp-tgbot"]
+CMD ["python3", "ytdlp-tgbot"]
